@@ -1,3 +1,3 @@
 ## Examples
 
-[see here](./dist)
+[see here](https://yueminhu.github.io/ub-components/dist/)
