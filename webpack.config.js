@@ -14,7 +14,7 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = env => {
-  const entry = path.join(__dirname, `./src/main`);
+  const entry = path.join(__dirname, `./src/example/main`);
 
   return {
     context: __dirname,
@@ -81,7 +81,7 @@ module.exports = env => {
       }),
       new HtmlWebpackPlugin({
         filename: "index.html",
-        template: path.join(__dirname, "./src/index.html"),
+        template: path.join(__dirname, "./src/example/index.html"),
         // dirname: dirname,
         chunks: "all"
       })

@@ -1,8 +1,8 @@
 import * as React from "react";
-import Button from "./button";
-import GenericModal from "./modal/generic";
-import DialogModal from "./modal/dialog";
-import LoadingModal from "./modal/loading";
+import Button from "../button";
+import GenericModal from "../modal/generic";
+import DialogModal from "../modal/dialog";
+import LoadingModal from "../modal/loading";
 
 interface Props {}
 
