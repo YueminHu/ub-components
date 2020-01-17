@@ -3,7 +3,7 @@ import * as React from "react";
 import "./style.less";
 import Button from "./button";
 import Modals from "./modal";
-import Toast from "./Toast";
+import Toast from "./toast";
 import LoadingLogo from "./ub-logo";
 
 interface Props {}
