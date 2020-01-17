@@ -21,9 +21,9 @@ module.exports = env => {
     entry,
     output: {
       path: path.resolve(__dirname, `./dist/`),
-      filename: `[name][contenthash:8].js`,
-      chunkFilename: `[name][contenthash:8].js`,
-      publicPath: "/dist"
+      filename: `[name].[contenthash:8].js`,
+      chunkFilename: `[name].[contenthash:8].js`,
+      publicPath: "./"
     },
     resolve: {
       extensions: [".js", ".jsx", ".ts", ".tsx"]
