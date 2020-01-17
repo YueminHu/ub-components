@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import "./index.less";
-import LoadingLogo from "components/ub-components/src/ub-logo";
+import LoadingLogo from "../ub-logo";
 
 interface Props extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   loading?: boolean;
@@ -10,7 +10,7 @@ interface Props extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLB
 const Button = (prop: Props) => {
   const { loading, children, className, disabled, ...restProps } = prop;
   return (
-    <button {...restProps} className={`ub-button ${loading? 'loading' : ''} ${className || ""}`} disabled={loading || disabled}>
+    <button {...restProps} className={`ub-button ${loading ? "loading" : ""} ${className || ""}`} disabled={loading || disabled}>
       <LoadingLogo color={"gray"}></LoadingLogo>
       {children}
     </button>

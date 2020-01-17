@@ -1,0 +1,10 @@
+{
+  "name": "ub-components",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "webpack -p"
+  },
+  "devDependencies": {
+    "@types/node": "^13.1.7"
+  }
+}
