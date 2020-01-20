@@ -4,8 +4,14 @@ interface Props extends React.PropsWithChildren<{}> {
   title: React.ReactNode;
 }
 
+let idx = 0;
+
 const Section = (prop: Props) => {
-  const [collapse, set_collapse] = React.useState(false);
+  const { current: instanceIdx } = React.useRef(String(idx++));
+  const [collapse, set_collapse] = React.useState(sessionStorage.getItem(instanceIdx) ? true : false);
+  React.useEffect(() => {
+    collapse ? sessionStorage.setItem(instanceIdx, "1") : sessionStorage.removeItem(instanceIdx);
+  }, [collapse]);
   return (
     <section
       style={{

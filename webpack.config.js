@@ -1,40 +1,41 @@
 const path = require("path");
 
 // general plugins...
-const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const LessFunc = require("less-plugin-functions");
 
 // production plugins...
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = env => {
-  const entry = path.join(__dirname, `./src/example/main`);
-
   return {
     context: __dirname,
-    entry,
+    entry: path.join(__dirname, `./src/example/main`),
+
     output: {
       path: path.resolve(__dirname, `./dist/`),
-      filename: `[name].[contenthash:8].js`,
-      chunkFilename: `[name].[contenthash:8].js`,
-      publicPath: "./"
+      filename: `[name].[hash:8].js`,
+      chunkFilename: `[name].[hash:8].js`,
+      publicPath: "/dist"
     },
     resolve: {
       extensions: [".js", ".jsx", ".ts", ".tsx"]
     },
     devtool: "source-map",
-
+    devServer: {
+      // contentBase: path.join(__dirname, "./src/example"),
+      port: 8081,
+      host: "0.0.0.0",
+      historyApiFallback: true
+    },
     mode: "production",
     module: {
       rules: [
         {
-          test: /less$/,
+          test: /less$|css$/,
           use: [
             {
               loader: MiniCssExtractPlugin.loader
@@ -54,7 +55,6 @@ module.exports = env => {
             loader: "babel-loader",
             options: {
               presets: ["@babel/preset-env", "@babel/preset-typescript", "@babel/preset-react"]
-              // plugins: ['@babel/plugin-proposal-object-rest-spread']
             }
           }
         },
@@ -64,7 +64,6 @@ module.exports = env => {
             {
               loader: "url-loader",
               options: {
-                // under 5kb
                 limit: 1024 * 5
               }
             }
@@ -76,13 +75,11 @@ module.exports = env => {
       new CleanWebpackPlugin(path.join(__dirname, "dist")),
       new ForkTsCheckerWebpackPlugin(),
       new MiniCssExtractPlugin({
-        filename: "[name].[contenthash:6].css"
-        // chunkFilename: "[id].[contenthash:8].css"
+        filename: "[name].[hash:6].css"
       }),
       new HtmlWebpackPlugin({
         filename: "index.html",
         template: path.join(__dirname, "./src/example/index.html"),
-        // dirname: dirname,
         chunks: "all"
       })
     ],
@@ -98,4 +95,3 @@ module.exports = env => {
     }
   };
 };
-// console.log(process.env.NODE_ENV);

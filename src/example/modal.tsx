@@ -3,6 +3,7 @@ import Button from "../button";
 import GenericModal from "../modal/generic";
 import DialogModal from "../modal/dialog";
 import LoadingModal from "../modal/loading";
+import Section from "./section";
 
 interface Props {}
 
@@ -13,8 +14,7 @@ const Modals = (prop: Props) => {
   const [loading_modal, set_loading_modal] = React.useState(false);
 
   return (
-    <section>
-      <p>Modals</p>
+    <Section title="Modals">
       <div>
         <p>
           Generic Modal<Button onClick={() => set_generic_modal(!generic_modal)}>Toggle</Button>
@@ -49,7 +49,7 @@ const Modals = (prop: Props) => {
         <div>This is Dialog Modal!</div>
       </DialogModal>
       <LoadingModal show={loading_modal} dismiss={() => set_loading_modal(false)}></LoadingModal>
-    </section>
+    </Section>
   );
 };
 

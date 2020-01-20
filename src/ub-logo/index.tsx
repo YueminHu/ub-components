@@ -9,7 +9,7 @@ interface Props {
 
 // const color = ;
 
-const LoadingLogo = (prop: Props) => {
+const UBLogo = (prop: Props) => {
   let { color = "rgb(73, 152, 252)", size, stationary } = prop;
   // if (!color) color = "rgb(73, 152, 252)";
   // const rings = ["M 175 30", "a 145 145 0 1 1 -145 145", "l 10 0", "a 135 135 0 1 0 135 -135"];
@@ -39,4 +39,4 @@ const LoadingLogo = (prop: Props) => {
   );
 };
 
-export default LoadingLogo;
+export default UBLogo;

@@ -1,12 +1,14 @@
 import * as React from "react";
 
+import "../css-variables.less";
 import "./style.less";
 import Button from "../button";
 import Modals from "./modal";
 import Toast from "../toast";
-import LoadingLogo from "../ub-logo";
+import UBLogo from "../ub-logo";
 import Input from "../input";
 import Section from "./section";
+import Progress from "../progress";
 
 interface Props {}
 
@@ -22,27 +24,36 @@ const App = (prop: Props) => {
         </div>
       </Section>
       <Modals></Modals>
-      <Section title="Toast">
-        <section>
-          <div>
-            <Button onClick={() => Toast.show("Toast showing...")}>Show Toast!</Button>
-          </div>
-        </section>
-      </Section>
       <Section title="Logo">
         <div>
-          <p>Logo loading</p>
-          <LoadingLogo size={40}></LoadingLogo>
+          <p>Loading Logo</p>
+          <UBLogo size={40}></UBLogo>
         </div>
         <div>
-          <p>Logo</p>
-          <LoadingLogo size={40} stationary></LoadingLogo>
+          <p>Stationary Logo</p>
+          <UBLogo size={40} stationary></UBLogo>
         </div>
       </Section>
       <Section title="Inputs">
         <div>
           <p>Input: Text</p>
-          <Input></Input>
+          <Input prefixElement={<span>Code:</span>} affixElemet={<span>Password</span>}></Input>
+        </div>
+      </Section>
+      <Section title="Notifications">
+        <div>
+          <p>Toast</p>
+          <Button onClick={() => Toast.show("Toast showing...")}>Show Toast!</Button>
+        </div>
+        <div>
+          <p>Banner</p>
+          <Button>Click to show notification</Button>
+        </div>
+      </Section>
+      <Section title="Display">
+        <div>
+          <p>Progress</p>
+          <Progress progress={0.8}></Progress>
         </div>
       </Section>
     </>
