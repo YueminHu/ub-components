@@ -25,7 +25,7 @@ const DialogModal = (prop: Props) => {
       set_loading(true);
       res.then(() => {
         set_loading(false);
-        dismiss();
+        // dismiss();
       });
     } else {
       dismiss();

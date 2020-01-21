@@ -10,6 +10,8 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 
+const IS_DEV = process.env.NODE_ENV !== "production";
+
 module.exports = env => {
   return {
     context: __dirname,
@@ -38,7 +40,7 @@ module.exports = env => {
           test: /less$|css$/,
           use: [
             {
-              loader: MiniCssExtractPlugin.loader
+              loader: IS_DEV ? "style-loader" : MiniCssExtractPlugin.loader
             },
             {
               loader: "css-loader"

@@ -1,0 +1,16 @@
+.ub-vscroll-wrapper {
+  height: 1.1em;
+  overflow: hidden;
+  box-sizing: content-box;
+
+  // >* {
+  //  margin-top: -0.1em;
+  // }
+
+  &.scrolled {
+    >* {
+      transition: all .3s ease;
+      transform: translateY(-100%);
+    }
+  }
+}

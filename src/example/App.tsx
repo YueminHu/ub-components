@@ -9,6 +9,7 @@ import UBLogo from "../ub-logo";
 import Input from "../input";
 import Section from "./section";
 import Progress from "../progress";
+import ImageLazy from "../image-lazy";
 
 interface Props {}
 
@@ -54,6 +55,10 @@ const App = (prop: Props) => {
         <div>
           <p>Progress</p>
           <Progress progress={0.8}></Progress>
+        </div>
+        <div>
+          <p>Lazy Load Image</p>
+          <ImageLazy src={'https://placekitten.com/100/100'}></ImageLazy>
         </div>
       </Section>
     </>
