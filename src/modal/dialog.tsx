@@ -43,10 +43,14 @@ const DialogModal = (prop: Props) => {
     const res = onOk(e, dismiss);
     if (res && res.constructor === Promise) {
       set_loading(true);
-      res.then(() => {
-        set_loading(false);
-        // dismiss();
-      });
+      res
+        .then(() => {
+          set_loading(false);
+          // dismiss();
+        })
+        .catch(e => {
+          set_loading(false);
+        });
     } else {
       dismiss();
     }
