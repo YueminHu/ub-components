@@ -1,17 +1,32 @@
-import * as React from "react";
+import * as React from 'react';
 
-import "./index.less";
+import './index.less';
 
-interface Props extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+interface Props
+  extends React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
   prefixElement?: React.ReactNode;
   affixElemet?: React.ReactNode;
+  wrapperStyle?: React.CSSProperties;
 }
 
 const Input = (prop: Props) => {
-  const { onFocus, onBlur, prefixElement, affixElemet, ...restProps } = prop;
+  const {
+    onFocus,
+    onBlur,
+    prefixElement,
+    affixElemet,
+    wrapperStyle,
+    ...restProps
+  } = prop;
   const [focus, set_focus] = React.useState(false);
   return (
-    <span className={`ub-input-wrapper ${focus ? "focus" : ""}`}>
+    <span
+      className={`ub-input-wrapper ${focus ? 'focus' : ''}`}
+      style={wrapperStyle}
+    >
       {prefixElement}
       <input
         onFocus={e => {
@@ -22,6 +37,7 @@ const Input = (prop: Props) => {
           set_focus(false);
           onBlur && onBlur(e);
         }}
+        {...restProps}
       ></input>
       {affixElemet}
     </span>

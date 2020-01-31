@@ -3,11 +3,11 @@ import * as React from "react";
 import "./index.less";
 import UBLogo from "../ub-logo";
 
-interface Props extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+export interface BtnProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   loading?: boolean;
 }
 
-const Button = (prop: Props) => {
+const Button = (prop: BtnProps) => {
   const { loading, children, className, disabled, ...restProps } = prop;
   return (
     <button {...restProps} className={`ub-button ${loading ? "loading" : ""} ${className || ""}`} disabled={loading || disabled}>

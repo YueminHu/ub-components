@@ -1,19 +1,39 @@
-import * as React from "react";
+import * as React from 'react';
 
-import "./index.less";
-import GenericModal, { GenericModalProps } from "./generic";
-import Button from "../button";
+import './index.less';
+import GenericModal, { GenericModalProps } from './generic';
+import Button, { BtnProps } from '../button';
 
 interface Props extends GenericModalProps {
-  onOk?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, c: GenericModalProps["dismiss"]) => void | Promise<any>;
+  onOk?: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    c: GenericModalProps['dismiss']
+  ) => void | Promise<any>;
   okText?: React.ReactNode;
-  onCancel?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, c: GenericModalProps["dismiss"]) => void | Promise<any>;
+  onCancel?: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    c: GenericModalProps['dismiss']
+  ) => void | Promise<any>;
   cancelText?: React.ReactNode;
   noCancenBtn?: boolean;
+  okBtnProps?: BtnProps;
+  cancelBtnProps?: BtnProps;
 }
 
 const DialogModal = (prop: Props) => {
-  let { show, dismiss, easing, children, onOk, okText, onCancel, cancelText, noCancenBtn } = prop;
+  let {
+    show,
+    dismiss,
+    easing,
+    children,
+    onOk,
+    okText,
+    onCancel,
+    cancelText,
+    noCancenBtn,
+    okBtnProps,
+    cancelBtnProps
+  } = prop;
   if (!onOk) onOk = () => dismiss();
   if (!onCancel) onCancel = () => dismiss();
 
@@ -33,12 +53,21 @@ const DialogModal = (prop: Props) => {
   };
 
   return (
-    <GenericModal show={show} dismiss={dismiss} easing={easing} className="ub-dialog-container">
+    <GenericModal
+      show={show}
+      dismiss={dismiss}
+      easing={easing}
+      className='ub-dialog-container'
+    >
       {children}
-      <div className="ub-dialog-footer">
-        {!noCancenBtn && <Button onClick={e => onCancel(e, dismiss)}>{cancelText || "取消"}</Button>}
-        <Button onClick={processOk} loading={loading}>
-          {okText || "确定"}
+      <div className='ub-dialog-footer'>
+        {!noCancenBtn && (
+          <Button onClick={e => onCancel(e, dismiss)} {...cancelBtnProps}>
+            {cancelText || '取消'}
+          </Button>
+        )}
+        <Button onClick={processOk} loading={loading} {...okBtnProps}>
+          {okText || '确定'}
         </Button>
       </div>
     </GenericModal>
