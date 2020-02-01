@@ -7,11 +7,11 @@
   display: inline-flex;
   align-items: center;
   background: #fff;
-  padding-left: 0.5em;
+  // padding-left: 0.5em;
   // width: 100%;
 
-  >:first-child:not(input) {
-    //  height: 1.5em;
+  >:first-child {
+    padding-left: 0.5em;
   }
 
   &.focus {
@@ -30,6 +30,10 @@
     &:focus,
     &:active {
       outline: none;
+    }
+
+    &:disabled {
+      background: #eaeaea;
     }
   }
 }

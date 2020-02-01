@@ -1,18 +1,21 @@
 .site-tip-wrapper {
-  width: 1.2em;
-  height: 1.2em;
-  vertical-align: text-top;
+  width: 1em;
+  height: 1em;
+  // vertical-align: text-top;
   display: inline-block;
   background-color: lightgray;
   border-radius: 50%;
   margin: 0 4px;
   text-align: center;
-  line-height: 1.2em;
+  line-height: 1em;
   color: #fff;
   cursor: pointer;
   position: relative;
+  z-index: 1;
 
   >span {
+    // z-index: 99;
+    // text-align: left;
     @parent-width: 20px;
     position: absolute;
     background: lightyellow;
@@ -22,6 +25,8 @@
     top: @parent-width;
     left: 0;
     transform: translateX(calc((50% - @parent-width / 2) * -1));
+    min-width: 15em;
+    font-size: 0.8em;
     // left: 0;
     // right: 0;
     // bottom: 0;

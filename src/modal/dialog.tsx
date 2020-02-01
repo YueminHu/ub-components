@@ -32,7 +32,8 @@ const DialogModal = (prop: Props) => {
     cancelText,
     noCancenBtn,
     okBtnProps,
-    cancelBtnProps
+    cancelBtnProps,
+    ...rest
   } = prop;
   if (!onOk) onOk = () => dismiss();
   if (!onCancel) onCancel = () => dismiss();
@@ -62,6 +63,7 @@ const DialogModal = (prop: Props) => {
       dismiss={dismiss}
       easing={easing}
       className='ub-dialog-container'
+      {...rest}
     >
       {children}
       <div className='ub-dialog-footer'>
