@@ -13,10 +13,11 @@ export interface GenericModalProps extends React.PropsWithChildren<{}> {
   noDismissOnShade?: boolean;
   destroyOnDismiss?: boolean;
   closeBtn?: boolean;
+  mountElement?: HTMLElement
 }
 
 const GenericModal = (prop: GenericModalProps) => {
-  let { show, dismiss, easing, children, className, noDismissOnShade, closeBtn = true } = prop;
+  let { show, dismiss, easing, children, className, noDismissOnShade, closeBtn = true, mountElement = document.body } = prop;
   if (!easing) easing = "none";
   const [render, set_render] = React.useState(false);
   const [mounted, set_mounted] = React.useState(false);
@@ -43,7 +44,7 @@ const GenericModal = (prop: GenericModalProps) => {
         {children}
       </div>
     </div>,
-    document.body
+    mountElement
   );
 };
 

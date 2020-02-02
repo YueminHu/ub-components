@@ -1,10 +1,11 @@
 import * as React from 'react';
+import * as ReactDom from 'react-dom';
 
 import './index.less';
 import GenericModal, { GenericModalProps } from './generic';
 import Button, { BtnProps } from '../button';
 
-interface Props extends GenericModalProps {
+interface DialogModalProps extends GenericModalProps {
   onOk?: (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     c: GenericModalProps['dismiss']
@@ -20,7 +21,7 @@ interface Props extends GenericModalProps {
   cancelBtnProps?: BtnProps;
 }
 
-const DialogModal = (prop: Props) => {
+const DialogModal = (prop: DialogModalProps) => {
   let {
     show,
     dismiss,
@@ -78,6 +79,31 @@ const DialogModal = (prop: Props) => {
       </div>
     </GenericModal>
   );
+};
+
+DialogModal.confirm = (options: DialogModalProps) => {
+  let { show, dismiss, ...rest } = options;
+  let internal_show = true;
+  const internal_dismiss = () => {
+    internal_show = false;
+    render();
+    setTimeout(() => {
+      document.body.removeChild(container);
+    }, 2000);
+  };
+  const container = document.createElement('div');
+  const render = () =>
+    ReactDom.render(
+      <DialogModal
+        {...rest}
+        show={internal_show}
+        dismiss={internal_dismiss}
+        mountElement={container}
+      ></DialogModal>,
+      container
+    );
+  document.body.appendChild(container);
+  render();
 };
 
 export default DialogModal;
