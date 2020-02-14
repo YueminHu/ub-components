@@ -1,18 +1,23 @@
 .modal-wrapper {
-  background-color: rgba(0, 0, 0, 0.6);
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
-  width: 200vw;
-  height: 200vh;
-  left: -50vw;
-  top: -50vh;
+  /* width: 200vw; */
+  /* height: 200vh; */
+  /* left: -50vw; */
+  /* top: -50vh; */
   visibility: hidden;
   opacity: 0;
-  transform: scale(0.5);
-  transition: all .3s linear;
+  /* transform: scale(0.5); */
+  transition: all 0.3s linear;
   z-index: 1092;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.4);
 
   &.show {
     visibility: visible;
@@ -52,6 +57,7 @@
     width: 15vw;
     height: 15vw;
     padding: 0;
+
     .ub-modal-close-icon {
       display: none;
     }
@@ -64,7 +70,8 @@
     right: 0;
     cursor: pointer;
     max-width: 35px;
-    > * {
+
+    >* {
       cursor: inherit;
     }
 

@@ -52,7 +52,9 @@ const Form = (Element: (prop) => JSX.Element) => {
       } else {
         /** clear the form */
         set_values(old_values => {
-          Object.keys(old_values).forEach(k => (old_values[k].value = ""));
+          Object.keys(old_values).forEach(k => {
+            old_values[k].value = Array.isArray(old_values[k].value) ? [] : "";
+          });
           return { ...old_values };
         });
       }

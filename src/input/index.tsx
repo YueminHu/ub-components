@@ -72,7 +72,7 @@ Input.Select = (prop: InputSelectProps) => {
 
   const filtered_pending_list = select_list.filter(i => {
     const str = mapping(i);
-    return str.toLowerCase().includes(String(value).toLowerCase()) && !form_value.includes(str);
+    return str.toLowerCase().includes(String(value).toLowerCase()) && !(form_value as any[]).map(mapping).includes(str);
   });
   const pending_list_show = filtered_pending_list.length && focus;
   const selected_idx = selecting_list_idx % filtered_pending_list.length;
