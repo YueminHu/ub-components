@@ -6,7 +6,7 @@ interface Props {
   required?: boolean;
   label?: string;
   transform?: (d: string) => any;
-  init_value: [];
+  init_value?: [];
 }
 
 export const FormWrapperContext = React.createContext<{

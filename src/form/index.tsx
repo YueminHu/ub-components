@@ -21,7 +21,7 @@ export const FormContext = React.createContext<{
 export interface FormProps {
   get_form_values: () => any;
   validate_form: () => string[] | null;
-  fill_form_values: (new_values?: { [key: string]: string | number }) => void;
+  fill_form_values: (new_values?: { [key: string]: any }) => void;
 }
 
 const Form = (Element: (prop) => JSX.Element) => {

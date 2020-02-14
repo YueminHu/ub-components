@@ -40,8 +40,16 @@ const Input = (prop: InputProps) => {
   );
 };
 
-Input.Select = (prop: InputProps & { select_list: string[]; onAdd?: (items: string[]) => void }) => {
-  const { onFocus, onBlur, prefixElement, affixElemet, wrapperStyle, onChange, id, select_list, onAdd, ...restProps } = prop;
+interface InputSelectProps<T = any> extends InputProps {
+  select_list: T[];
+  onAdd?: (items: string[]) => void;
+  mapping: (arg0: T) => string;
+}
+
+Input.Select = (prop: InputSelectProps) => {
+  const { onFocus, onBlur, prefixElement, affixElemet, wrapperStyle, onChange, id, select_list, onAdd, mapping, ...restProps } = prop;
+
+  const input_ref = React.useRef<HTMLInputElement>();
 
   const [value, set_value] = React.useState("");
   const [focus, set_focus] = React.useState(false);
@@ -50,19 +58,22 @@ Input.Select = (prop: InputProps & { select_list: string[]; onAdd?: (items: stri
 
   const [selecting_list_idx, set_selecting_list_idx] = React.useState(-1);
 
-  const add_item = (i: string) => {
+  const add_item = (i: any) => {
     Array.isArray(form_value) && set_form_value([...form_value, i]);
     set_value("");
   };
 
-  const remove_item = (item: string) => {
+  const remove_item = (item: any) => {
     if (Array.isArray(form_value)) {
       form_value.splice(form_value.indexOf(item), 1);
       set_form_value([...form_value]);
     }
   };
 
-  const filtered_pending_list = select_list.filter(i => i.toLowerCase().includes(String(value).toLowerCase()) && !form_value.includes(i));
+  const filtered_pending_list = select_list.filter(i => {
+    const str = mapping(i);
+    return str.toLowerCase().includes(String(value).toLowerCase()) && !form_value.includes(str);
+  });
   const pending_list_show = filtered_pending_list.length && focus;
   const selected_idx = selecting_list_idx % filtered_pending_list.length;
 
@@ -71,12 +82,13 @@ Input.Select = (prop: InputProps & { select_list: string[]; onAdd?: (items: stri
       {prefixElement}
       {Array.isArray(form_value) &&
         form_value.map(item => (
-          <span key={item} className="ub-select-item">
-            {item}
+          <span key={mapping(item)} className="ub-select-item">
+            {mapping(item)}
             {/* <span onClick={() => remove_item(item)}>X</span> */}
           </span>
         ))}
       <input
+        ref={input_ref}
         value={value}
         onFocus={e => {
           set_focus(true);
@@ -114,8 +126,15 @@ Input.Select = (prop: InputProps & { select_list: string[]; onAdd?: (items: stri
       {pending_list_show ? (
         <span className="ub-select-list" onClick={e => e.stopPropagation()}>
           {filtered_pending_list.map((i, idx) => (
-            <span key={i} className={idx === selected_idx ? "selected" : ""} onClick={() => add_item(i)}>
-              {i}
+            <span
+              key={mapping(i) + idx}
+              className={idx === selected_idx ? "selected" : ""}
+              onClick={() => {
+                add_item(i);
+                // input_ref.current.focus();
+              }}
+            >
+              {mapping(i)}
             </span>
           ))}
         </span>
