@@ -1,24 +1,19 @@
-import * as React from 'react';
-import * as ReactDom from 'react-dom';
+import * as React from "react";
+import * as ReactDom from "react-dom";
 
-import './index.less';
-import GenericModal, { GenericModalProps } from './generic';
-import Button, { BtnProps } from '../button';
+import "./index.less";
+import GenericModal, { GenericModalProps } from "./generic";
+import Button, { BtnProps } from "../button";
 
 interface DialogModalProps extends GenericModalProps {
-  onOk?: (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    c: GenericModalProps['dismiss']
-  ) => void | Promise<any>;
+  onOk?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, c: GenericModalProps["dismiss"]) => void | Promise<any>;
   okText?: React.ReactNode;
-  onCancel?: (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    c: GenericModalProps['dismiss']
-  ) => void | Promise<any>;
+  onCancel?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, c: GenericModalProps["dismiss"]) => void | Promise<any>;
   cancelText?: React.ReactNode;
   noCancenBtn?: boolean;
   okBtnProps?: BtnProps;
   cancelBtnProps?: BtnProps;
+  notDismissOnOk?: boolean;
 }
 
 const DialogModal = (prop: DialogModalProps) => {
@@ -34,6 +29,7 @@ const DialogModal = (prop: DialogModalProps) => {
     noCancenBtn,
     okBtnProps,
     cancelBtnProps,
+    notDismissOnOk,
     ...rest
   } = prop;
   if (!onOk) onOk = () => dismiss();
@@ -48,33 +44,27 @@ const DialogModal = (prop: DialogModalProps) => {
       res
         .then(() => {
           set_loading(false);
-          // dismiss();
+          if (!notDismissOnOk) dismiss();
         })
         .catch(e => {
           set_loading(false);
         });
     } else {
-      dismiss();
+      if (!notDismissOnOk) dismiss();
     }
   };
 
   return (
-    <GenericModal
-      show={show}
-      dismiss={dismiss}
-      easing={easing}
-      className='ub-dialog-container'
-      {...rest}
-    >
+    <GenericModal show={show} dismiss={dismiss} easing={easing} className="ub-dialog-container" {...rest}>
       {children}
-      <div className='ub-dialog-footer'>
+      <div className="ub-dialog-footer">
         {!noCancenBtn && (
           <Button onClick={e => onCancel(e, dismiss)} {...cancelBtnProps}>
-            {cancelText || '取消'}
+            {cancelText || "取消"}
           </Button>
         )}
         <Button onClick={processOk} loading={loading} {...okBtnProps}>
-          {okText || '确定'}
+          {okText || "确定"}
         </Button>
       </div>
     </GenericModal>
@@ -91,15 +81,10 @@ DialogModal.confirm = (options: DialogModalProps) => {
       document.body.removeChild(container);
     }, 2000);
   };
-  const container = document.createElement('div');
+  const container = document.createElement("div");
   const render = () =>
     ReactDom.render(
-      <DialogModal
-        {...rest}
-        show={internal_show}
-        dismiss={internal_dismiss}
-        mountElement={container}
-      ></DialogModal>,
+      <DialogModal {...rest} show={internal_show} dismiss={internal_dismiss} mountElement={container}></DialogModal>,
       container
     );
   document.body.appendChild(container);
