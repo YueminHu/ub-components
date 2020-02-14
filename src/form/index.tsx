@@ -2,9 +2,9 @@ import * as React from "react";
 
 type Values = {
   [key: string]: {
-    value: string;
+    value: string | string[];
     required: boolean;
-    transform?: (d: string) => any;
+    transform?: (d: string | string[]) => any;
   };
 };
 
@@ -20,8 +20,8 @@ export const FormContext = React.createContext<{
 
 export interface FormProps {
   get_form_values: () => any;
-  validate_form: () => { field: string }[] | null;
-  fill_values: (new_values: { [key: string]: string }) => void;
+  validate_form: () => string[] | null;
+  fill_form_values: (new_values?: { [key: string]: string | number }) => void;
 }
 
 const Form = (Element: (prop) => JSX.Element) => {
@@ -43,11 +43,19 @@ const Form = (Element: (prop) => JSX.Element) => {
       return res.length ? res : null;
     };
 
-    const fill_values = (new_values: { [key: string]: string }) => {
-      set_values(old_values => {
-        Object.keys(new_values).forEach(k => old_values[k] && (old_values[k].value = new_values[k]));
-        return { ...old_values };
-      });
+    const fill_form_values = (new_values: { [key: string]: string }) => {
+      if (new_values) {
+        set_values(old_values => {
+          Object.keys(new_values).forEach(k => old_values[k] && (old_values[k].value = new_values[k]));
+          return { ...old_values };
+        });
+      } else {
+        /** clear the form */
+        set_values(old_values => {
+          Object.keys(old_values).forEach(k => (old_values[k].value = ""));
+          return { ...old_values };
+        });
+      }
     };
 
     return (
@@ -57,7 +65,7 @@ const Form = (Element: (prop) => JSX.Element) => {
           set_values
         }}
       >
-        <Element {...props} get_form_values={get_values} validate_form={validate_form} fill_values={fill_values}></Element>
+        <Element {...props} get_form_values={get_values} validate_form={validate_form} fill_form_values={fill_form_values}></Element>
       </FormContext.Provider>
     );
   };

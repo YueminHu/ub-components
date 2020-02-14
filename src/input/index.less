@@ -2,22 +2,19 @@
   box-shadow: none;
   transition: all 0.3s ease;
   border-radius: 2px;
-  // display: inline-block;
   border: 1px solid rgba(0, 0, 0, 0.3);
   display: inline-flex;
   align-items: flex-end;
   align-items: center;
   background: #fff;
   padding: 1px;
-  // padding-left: 0.5em;
-  // width: 100%;
+  position: relative;
 
   >:first-child {
     padding-left: 0.5em;
   }
 
   &.focus {
-
     box-shadow: 0px 0px 0px 2px rgba(174, 238, 249, 0.5);
   }
 
@@ -25,9 +22,7 @@
   >textarea {
     vertical-align: bottom;
     border-color: transparent;
-    // height: 1.5em;
     padding: 0.3em;
-    // font-size: 16px;
     width: 100%;
 
     &:focus,
@@ -37,6 +32,30 @@
 
     &:disabled {
       background: #eaeaea;
+    }
+  }
+
+  .ub-select-item {
+    background: #eaeaea;
+    margin-left: 0.5em;
+    padding: 0 0.5em;
+  }
+
+  .ub-select-list {
+    position: absolute;
+    top: 2em;
+    left: 0;
+    width: 100%;
+    z-index: 99;
+    background: #fff;
+    border: inherit;
+
+    >span {
+      display: block;
+
+      &.selected {
+        background: #eaeaea;
+      }
     }
   }
 
