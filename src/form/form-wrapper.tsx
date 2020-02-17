@@ -5,12 +5,12 @@ interface Props {
   name: string;
   required?: boolean;
   label?: string;
-  transform?: (d: string) => any;
-  init_value?: [];
+  transform?: (d: any) => any;
+  init_value?: any;
 }
 
 export const FormWrapperContext = React.createContext<{
-  value: string | string[];
+  value: any;
   set_form_value: React.Dispatch<React.SetStateAction<string | string[]>>;
   name: string;
 }>({
@@ -20,9 +20,9 @@ export const FormWrapperContext = React.createContext<{
 });
 
 const FormWrapper = (prop: Props) => {
-  const { name, required, transform, init_value } = prop;
+  const { name, required, transform = d => d, init_value } = prop;
   return Element => {
-    const { set_values, values } = React.useContext(FormContext);
+    const { set_values, values, remove_field } = React.useContext(FormContext);
     React.useEffect(() => {
       set_values(old_value => ({
         ...old_value,
@@ -32,10 +32,19 @@ const FormWrapper = (prop: Props) => {
           transform
         }
       }));
+      return () => {
+        console.log("remove!");
+        remove_field(name);
+      };
     }, []);
     const set_form_value = (value: any) => {
       set_values(old_value => {
-        old_value[name].value = value;
+        old_value[name] = {
+          value,
+          required,
+          transform
+        };
+        // console.log(old_value);
         return { ...old_value };
       });
     };

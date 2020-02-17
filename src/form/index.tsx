@@ -2,7 +2,7 @@ import * as React from "react";
 
 type Values = {
   [key: string]: {
-    value: string | string[];
+    value: any;
     required: boolean;
     transform?: (d: string | string[]) => any;
   };
@@ -11,9 +11,11 @@ type Values = {
 export const FormContext = React.createContext<{
   values: Values;
   set_values: React.Dispatch<React.SetStateAction<Values>>;
+  remove_field: (field: string) => void;
 }>({
   values: {},
-  set_values: () => void 0
+  set_values: () => void 0,
+  remove_field: field => void 0
 });
 
 // interface Props {}
@@ -27,15 +29,16 @@ export interface FormProps {
 const Form = (Element: (prop) => JSX.Element) => {
   return props => {
     const [values, set_values] = React.useState<Values>({});
-    const get_values = () =>
-      Object.entries(values)
-        // .map(([key, value]) => [key, value.value])
-        .reduce((prev, next) => {
-          const next_key = next[0];
-          const next_val = next[1];
-          prev[next_key] = next_val.transform ? next_val.transform(next_val.value) : next_val.value;
-          return prev;
-        }, {});
+    const get_values = () => {
+      // console.log(values);
+      return Object.entries(values).reduce((prev, next) => {
+        const next_key = next[0];
+        const next_val = next[1];
+        prev[next_key] = Array.isArray(next_val) ? next_val.value.map(next_val.transform) : next_val.transform(next_val.value);
+        return prev;
+      }, {});
+    };
+
     const validate_form = () => {
       const res = Object.entries(values)
         .filter(([key, value]) => value.required && !value.value)
@@ -60,11 +63,17 @@ const Form = (Element: (prop) => JSX.Element) => {
       }
     };
 
+    const remove_field = (key: string) => {
+      delete values[key];
+      set_values({ ...values });
+    };
+
     return (
       <FormContext.Provider
         value={{
           values,
-          set_values
+          set_values,
+          remove_field
         }}
       >
         <Element {...props} get_form_values={get_values} validate_form={validate_form} fill_form_values={fill_form_values}></Element>
