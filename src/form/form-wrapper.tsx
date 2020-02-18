@@ -11,7 +11,7 @@ interface Props {
 
 export const FormWrapperContext = React.createContext<{
   value: any;
-  set_form_value: React.Dispatch<React.SetStateAction<string | string[]>>;
+  set_form_value: React.Dispatch<React.SetStateAction<any>>;
   name: string;
 }>({
   value: "",
@@ -23,6 +23,16 @@ const FormWrapper = (prop: Props) => {
   const { name, required, transform = d => d, init_value } = prop;
   return Element => {
     const { set_values, values, remove_field } = React.useContext(FormContext);
+    // if (!values[name]) {
+    //   set_values(old_value => ({
+    //     ...old_value,
+    //     [name]: {
+    //       value: init_value || "",
+    //       required: !!required,
+    //       transform
+    //     }
+    //   }));
+    // }
     React.useEffect(() => {
       set_values(old_value => ({
         ...old_value,

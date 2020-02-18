@@ -21,7 +21,7 @@ export const FormContext = React.createContext<{
 // interface Props {}
 
 export interface FormProps {
-  get_form_values: () => any;
+  get_form_values: (key?: string) => any;
   validate_form: () => string[] | null;
   fill_form_values: (new_values?: { [key: string]: any }) => void;
 }
@@ -29,7 +29,8 @@ export interface FormProps {
 const Form = (Element: (prop) => JSX.Element) => {
   return props => {
     const [values, set_values] = React.useState<Values>({});
-    const get_values = () => {
+    const get_values = (key?: string) => {
+      if (key) return values[key] ? values[key].value : undefined;
       // console.log(values);
       return Object.entries(values).reduce((prev, next) => {
         const next_key = next[0];
