@@ -76,6 +76,8 @@ Input.Select = (prop: InputSelectProps) => {
 
   const [selecting_list_idx, set_selecting_list_idx] = React.useState(-1);
 
+  if (!Array.isArray(form_value)) return null;
+
   const add_item = (i: any) => {
     if (Array.isArray(form_value)) {
       const added = [...form_value, i];

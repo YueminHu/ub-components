@@ -37,7 +37,7 @@ const FormWrapper = (prop: Props) => {
       set_values(old_value => ({
         ...old_value,
         [name]: {
-          value: init_value || "",
+          value: init_value === undefined ? "" : init_value,
           required: !!required,
           transform
         }
