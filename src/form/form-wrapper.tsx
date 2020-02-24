@@ -23,25 +23,18 @@ const FormWrapper = (prop: Props) => {
   const { name, required, transform = d => d, init_value } = prop;
   return Element => {
     const { set_values, values, remove_field } = React.useContext(FormContext);
-    // if (!values[name]) {
-    //   set_values(old_value => ({
-    //     ...old_value,
-    //     [name]: {
-    //       value: init_value || "",
-    //       required: !!required,
-    //       transform
-    //     }
-    //   }));
-    // }
+
     React.useEffect(() => {
-      set_values(old_value => ({
-        ...old_value,
-        [name]: {
-          value: init_value === undefined ? "" : init_value,
-          required: !!required,
-          transform
-        }
-      }));
+      set_values(old_value => {
+        return {
+          ...old_value,
+          [name]: {
+            value: init_value === undefined ? "" : init_value,
+            required: !!required,
+            transform
+          }
+        };
+      });
       return () => {
         console.log("remove!");
         remove_field(name);
@@ -54,7 +47,6 @@ const FormWrapper = (prop: Props) => {
           required,
           transform
         };
-        // console.log(old_value);
         return { ...old_value };
       });
     };
@@ -63,7 +55,7 @@ const FormWrapper = (prop: Props) => {
         value={{
           set_form_value,
           name,
-          value: values[name] && (values[name].value || "")
+          value: values[name] ? values[name].value : ""
         }}
       >
         {prop.label && (

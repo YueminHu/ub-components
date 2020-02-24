@@ -31,7 +31,6 @@ const Form = (Element: (prop) => JSX.Element) => {
     const [values, set_values] = React.useState<Values>({});
     const get_values = (key?: string) => {
       if (key) return values[key] ? values[key].value : undefined;
-      // console.log(values);
       return Object.entries(values).reduce((prev, next) => {
         const next_key = next[0];
         const next_val = next[1];
@@ -42,7 +41,7 @@ const Form = (Element: (prop) => JSX.Element) => {
 
     const validate_form = () => {
       const res = Object.entries(values)
-        .filter(([key, value]) => value.required && !value.value)
+        .filter(([key, value]) => value.required && value.value === "")
         .map(([key, value]) => key);
       return res.length ? res : null;
     };
@@ -57,7 +56,14 @@ const Form = (Element: (prop) => JSX.Element) => {
         /** clear the form */
         set_values(old_values => {
           Object.keys(old_values).forEach(k => {
-            old_values[k].value = Array.isArray(old_values[k].value) ? [] : "";
+            const old_val = old_values[k].value;
+            if (Array.isArray(old_val)) {
+              old_values[k].value = [];
+            } else if (typeof old_val === "boolean") {
+              old_values[k].value = false;
+            } else {
+              old_values[k].value = "";
+            }
           });
           return { ...old_values };
         });
